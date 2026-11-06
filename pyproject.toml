@@ -39,7 +39,7 @@ dev = [
 packages = ["src/metaprobe"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["test"]
 
 [tool.ruff]
 line-length = 88
