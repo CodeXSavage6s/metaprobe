@@ -5,9 +5,9 @@ class MetadataExtractor:
     def __init__(self):
         self.fetcher = Fetcher()
 
-    def get_metadata(self, url):
+    async def get_metadata(self, url):
         
-        html_content = self.fetcher.fetch(url)
+        html_content = await self.fetcher.fetch(url)
         
         if not html_content:
             return {"error": "Could not retrieve page content."}
@@ -20,17 +20,17 @@ class MetadataExtractor:
         }
 
         title_tag = soup.find('title')
-        metadata['title'] = title_tag.string.strip() if title_tag and title_tag.string else None
+        metadata['title'] = title_tag.get_text(strip=True) if title_tag else None
 
         for tag in soup.find_all('meta'):
             name = tag.get('name') or tag.get('property')
             content = tag.get('content')
             if name and content:
-              if name.startswith('og'):
+              if name.startswith('og:'):
                 metadata['open_graph'][name] = content.strip()
               elif name.startswith('twitter:'):
                 metadata['twitter_card'][name] = content.strip()
-              else:
+              elif name not in ('title', 'open_graph', 'twitter_card'):
                 metadata[name] = content.strip()
                 
 
