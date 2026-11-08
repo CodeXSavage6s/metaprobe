@@ -24,13 +24,17 @@ classifiers = [
 ]
 
 dependencies = [
-    "requests>=2.31,<3",
-    "beautifulsoup4>=4.12,<5"
+    "beautifulsoup4>=4.12,<5",
+    "httpx>=0.25,<1"
 ]
+
 
 [project.optional-dependencies]
 dev = [
     "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "respx",
     "ruff",
     "mypy"
 ]
@@ -40,6 +44,9 @@ packages = ["src/metaprobe"]
 
 [tool.pytest.ini_options]
 testpaths = ["test"]
+asyncio_mode = "auto"
+xfail_strict = true
+addopts = "-ra"
 
 [tool.ruff]
 line-length = 88
