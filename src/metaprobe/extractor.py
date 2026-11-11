@@ -20,8 +20,8 @@ class MetadataExtractor:
         }
 
         title_tag = soup.find('title')
-        metadata['title'] = title_tag.get_text(strip=True) if title_tag else None
-
+        metadata['title'] = title_tag.get_text().strip() if title_tag else None
+      
         for tag in soup.find_all('meta'):
             name = tag.get('name') or tag.get('property')
             content = tag.get('content')
